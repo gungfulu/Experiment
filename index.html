@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    </meta>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <title>
+        login
+    </title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-md-12" id="form-container">
+            <h1 class="text-center"> login </h1>
+
+            <form id="loginForm" action="user.php?do=login" class="form-horizontal" method="post" name="form">
+                <div class="form-group">
+                    <label class="col-md-3 text-right" for="loginName">userName: </label>
+                    <div class="col-md-9">
+                        <input class="form-control " id="loginName" name="loginName" required="true" type="text" />
+                        <p id="loginNameError" style="margin-bottom: -2px;color: red;"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 text-right" for="loginPwd"> password: </label>
+                    <div class="col-md-9">
+                        <input class="form-control" id="loginPwd" name="loginPwd" required="true" type="password" />
+                        <p id="loginPwdError" style="margin-bottom: -2px;color: red;"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 text-center">
+                        <button class="btn btn-default " id="mysubmit" name="mysubmit" type="button"> login</button>
+                    </div>
+                    <div class=" col-md-6 text-center">
+                        <a class="btn  btn-default" href="#" data-toggle="modal" data-target="#registerModal">
+                            register </a>
+                    </div>
+                    <p id="registerError" style="margin-bottom: -2px;color: red;"></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- registerModal  start -->
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <spanaria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="registerModal">Register</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form action="#" class="form-horizontal" method="post" role="form">
+                        <div class="form-group">
+                            <label class="col-md-3 text-right" for="uaerName"> uaerName:</label>
+                            <div class="col-md-9">
+                                <input class="form-control text-left" id="uaerName" name="uaerName" required="true"
+                                    type="text" />
+                                <p id="uaerNameError" style="margin-bottom: -2px;color: red;"> </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 text-right" for="pwd">password:</label>
+                            <div class="col-md-9">
+                                <input class="form-control" id="pwd" name="pwd" required="true" type="password" />
+                                <p id="pwdError" style="margin-bottom: -2px;color: red;"> </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 text-right" for="rePassword"> rePassword: </label>
+                            <div class="col-md-9 text-center">
+                                <input class="form-control" id="rePassword" name="rePassword" required="true"
+                                    type="password" />
+                                <p id="rePasswordError" style="margin-bottom: -2px;color: red;"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 text-right" for="email">email:</label>
+                            <div class="col-md-9 text-center">
+                                <input class="form-control" id="email" name="email" required="true" type="text" />
+                                <p id="emailError" style="margin-bottom: -2px;color: red;"> </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 text-right" for="category">category:</label>
+                            <div class="col-md-9 text-left">
+                                <label class="radio-inline">
+                                    <input type="radio" name="category" id="category1" value="2"> Student
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="category" id="category2" value="3">EAO
+                                </label>
+                                <p id="categoryError" style="margin-bottom: -2px;color: red;"> </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 text-center">
+                                <input id="Register" class="btn btn-default " type="button" value="Register" />
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <a class="btn  btn-default" href="index.html">Existing account</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <!--footer  start-->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>
+                        Copyright© 2008-2020 xxxxx. All Rights Reserved. Magento Templates by xxxx.COM
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--footer end -->
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/md5.js"></script>
+    <script type="text/javascript" src="js/myjs.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script>
+
+        //----------------- User login  start----------
+
+        $('#mysubmit').on('click', function () {
+            var url = "user.php";
+            var loginName = $('#loginName').val();
+            var loginPwd = $('#loginPwd').val();
+
+            var data = { "do": "login", "loginName": loginName, "loginPwd": loginPwd };
+
+            $.get(url, data, function (res) {
+                if (res == '1') {
+                    self.location = "admin.html";
+                }
+                else {
+                    self.location = "index.html";
+
+                }
+
+            });
+
+        });
+
+        //----------------- User login  end----------
+        //----------------- User Register  start----------
+
+        $('#Register').on('click', function () {
+            var url = "user.php";
+            var uaerName = $('#uaerName').val();
+            var pwd = $('#pwd').val();
+            var email = $('#email').val();
+            var category = $('input:radio:checked').val();
+            var data = { "do": "Register", "uaerName": uaerName, "pwd": pwd, "email": email, "category": category };
+
+            $.get(url, data, function (res) {
+                if (res == '1') {
+                    alert('Registration succeeded, please log in')
+                    self.location = "index.html";
+                }
+                else {
+
+                    alert(' login has failed ')
+                    self.location = "index.html";
+
+                }
+
+
+            });
+
+        });
+
+
+
+
+        var logout = function () {
+
+
+            var url = "user.php?do=logout";
+            var data = {};
+            $.get(url, data, function (res) {
+
+                if (res == '1') {
+                    alert("logout succeeded")
+                    self.location = "index.html";
+                }
+                else {
+                    alert('logout failed');
+                }
+
+            })
+        }
+
+         //----------------- User Register  end----------
+
+    </script>
+</body>
+
+</html>

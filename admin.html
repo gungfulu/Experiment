@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>admin</title>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!--Start of upper navigation bar-->
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="admin.html"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Admin</a>
+                    </li>
+                    <li><a href="admin.html"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;Experiment
+                            management</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#bbs" onclick="logout()"><span
+                                class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--end of upper navigation bar-->
+
+
+
+        <div class="container">
+            <!--  Body  start-->
+            <!--  Left navigation bar start-->
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="list-group">
+                        <a href="admin.html" class="list-group-item active">experimentList</a>
+                        <a href="experimentadd.html" class="list-group-item  experimentaddA">experimentAdd</a>
+                    </div>
+                </div>
+                <!--  Left navigation bar end-->
+
+
+                <div class="col-md-10">
+
+                    <!--  Body navigation start-->
+                    <div class="page-header">
+                        <h1>experiment Management</h1>
+                    </div>
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="admin.html">experimentList</a>
+                        </li>
+
+                        <li>
+                            <a href="experimentadd.html" class="experimentaddA">experimentAdd</a>
+                        </li>
+                    </ul>
+                    <!--  Body navigation end-->
+
+
+
+                    <!--  table  start-->
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Experiment applicant</th>
+                                <th>Release time</th>
+                                <th>Audit record</th>
+                                <th>operation</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mainTbody">
+                            <!-- Dynamic initialization tr -->
+                        </tbody>
+                    </table>
+                    <!--table end-->
+                </div>
+            </div>
+            <!--  Body  end-->
+        </div>
+
+        <!-- auditRecordModalLabel  start -->
+        <div class="modal fade" id="auditRecordModalLabel" tabindex="-1" role="dialog"
+            aria-labelledby="auditRecordModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <spanaria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="auditRecordModalLabel">Audit record</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>reviewer</th>
+                                    <th>auditContent</th>
+                                    <th>audittime</th>
+                                </tr>
+                            </thead>
+                            <tbody id="auditRecordModalBody">
+                                <!-- Dynamic initialization tr -->
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- auditRecordModalLabel  end -->
+
+        <!-- editModalLabel  start -->
+
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <spanaria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="editModalLabel">experiment edit</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="experiment.php?do=edit" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+
+                                <input type="hidden" id="editdateid" name="editdateid" value="">
+
+                                <label for="title">Title</label>
+                                <input type="text" id="editModalTitle" name="editModalTitle" class="form-control"
+                                    placeholder="please enter title">
+                            </div>
+                            <div class="form-group">
+                                <label for="content">experiment description</label>
+                                <textarea id="editModalContent" name="editModalContent" class="form-control" rows="5"
+                                    cols="10" placeholder="please enter content"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputFile">File input</label>
+                                <input type="file" id="editModalInputFile" name="editModalInputFile">
+                                <p class="help-block">Please upload the experiment description attachment.</p>
+                            </div>
+                            <div class="form-group">
+                                <a href="#" id="editModalA">Click download </a>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" id="editModalButton" name="editModalButton"
+                                    class="btn btn-default text-center">submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- editModalLabel  end -->
+
+        <!-- auditModalLabel  start -->
+        <div class="modal fade" id="auditModal" tabindex="-1" role="dialog" aria-labelledby="auditModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <spanaria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="auditModalLabel">experiment audit</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#">
+
+                            <input type="hidden" id="auditdateid" name="auditdateid" value="">
+
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" id="auditModalTitle" name="auditModalTitle" class="form-control"
+                                    Readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="content">experiment description</label>
+                                <textarea id="auditModalContent" name="auditModalContent" class="form-control" rows="5"
+                                    cols="10" Readonly></textarea>
+                            </div>
+                            <div class="form-group">
+                                <a href="#" id="auditModalA">Click download </a>
+                            </div>
+                            <div class="form-group">
+                                <label for="content">audit comments</label>
+                                <textarea id="auditContent" class="form-control" rows="5" cols="10"
+                                    placeholder="please enter content"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" id="Agree" name="Agree"
+                                    class="btn btn-default text-center">Agree</button>
+                                <button type="button" id="disagree" name="disagree"
+                                    class="btn btn-default text-center">disagree</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- auditModalLabel  end -->
+
+
+        <!-- auditModalLabel  start -->
+        <div class="modal fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="assignModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <spanaria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="assignModal">assign reviewer</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#">
+
+                            <input type="hidden" id="assigndateid" name="assigndateid" value="">
+
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" id="assignModalTitle" name="assignModalTitle" class="form-control"
+                                    Readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="content">experiment description</label>
+                                <textarea id="assignModalcontent" name="assignModalcontent" class="form-control"
+                                    rows="5" cols="10" Readonly></textarea>
+                            </div>
+                            <div class="form-group">
+                                <a href="#" id="assignModalA">Click download </a>
+                            </div>
+                            <div class="form-group">
+                                <label>assign reviewer </label>
+                                <select multiple class="form-control" id="assignReviewer" name="assignReviewer">
+                                    <!-- Dynamic initialization op -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" id="assignModalButton" name="assignModalButton"
+                                    class="btn btn-default text-center">submit</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--footer start-->
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            Copyright© 2008-2020 xxxxx. All Rights Reserved. Magento Templates by xxxx.COM
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--footer   end -->
+
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/myjs.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script>
+
+
+            //-----------------------------Initialize list page  start-------------------------------------
+            var tbody = $("#mainTbody");
+            var url = "experiment.php?do=initMainPage";
+            var data = { "Title": "aa", "applicant": "ccc" };
+            $.getJSON(url, data, function (res) {
+
+                $.each(res, function (n, value) {
+                    var str = `
+                    <tr>
+                        <td>${value.Title}</td>
+                        <td>${value.username}</td>
+                        <td>${value.apptime}</td>
+                        <td>
+                        <a href="#" data-toggle="modal" data-target="#auditRecordModalLabel" data-id="${value.id}" >${value.Approved}</a>
+                        </td>
+                        <td>
+                            <div>
+                                     <a href="#"  id="editButton" class="btn btn-default editrule"
+                                                    data-toggle="modal" data-target="#editModal" data-id="${value.id}">
+                                                    edit
+                                   </a>
+                                   <a href="#"  id="deleteButton" id="editButton" class="btn btn-default deleterule"  onclick="experimenDelete(${value.id})" >
+                                                    delete
+                                   </a>
+                                   <a href="#" id="auditButton" class="btn btn-default auditrule" data-toggle="modal" data-target="#auditModal" data-id="${value.id}">
+                                                    audit
+                                 </a>
+                                   <a href="#"  id="assignButton" class="btn btn-default assignrule"
+                                                    data-toggle="modal" data-target="#assignModal" data-id="${value.id}">
+                                                    assign
+                               </a>
+                            </div>
+                        </td>
+                     </tr>`;
+                    tbody.append(str);
+                })
+
+                initrule();
+            });
+            //-----------------------------Initialize list page  end-------------------------------------
+            //----------Display different buttons according to different roles  start--------------------------
+
+            var initrule = function () {
+                var url = "experiment.php?do=initrule";
+                var data = { "Title": "aa", "applicant": "bb" };
+                var editButton = $('.editrule');
+                var deleteButton = $('.deleterule');
+                var auditButton = $('.auditrule');
+                var assignButton = $('.assignrule');
+                var experimentaddA = ('.experimentaddA');
+
+                $.getJSON(url, data, function (rule) {
+                    switch (rule.userType) {
+                        case '1':
+
+                            editButton.hide();
+                            deleteButton.hide();
+                            auditButton.hide();
+                            experimentaddA.hide();
+                            break;
+                        case '2':
+                            assignButton.hide();
+                            auditButton.hide();
+                            break;
+
+                        case '3':
+                            editButton.hide();
+                            deleteButton.hide();
+                            assignButton.hide();
+                            experimentaddA.hide();
+                            break;
+                    }
+                })
+
+            }
+            //----------Display different buttons according to different roles  end-------------
+
+            //-------------------------Delete method  start ------------------------------------
+
+            var experimenDelete = function (id) {
+
+
+                var url = "experiment.php?do=delete";
+                var data = { "id": id };
+                $.get(url, data, function (res) {
+
+                    if (res == '1') {
+                        alert("Delete succeeded")
+                        self.location = "admin.html";
+                    }
+                    else {
+                        alert('Delete failed');
+                    }
+
+                })
+            }
+
+            //-------------------------Delete method  end -------------------------------------------
+
+            //------------------------Initialize audit record start--------------------------------
+
+
+            $('#auditRecordModalLabel').on('shown.bs.modal', function (en) {
+                var tbody = $('#auditRecordModalBody');
+                var url = "experiment.php?do=getauditRecord";
+                var dataid = $(en.relatedTarget).data('id');
+                var data = { "dataid": dataid };
+
+                $.getJSON(url, data, function (res) {
+
+                    $.each(res, function (n, value) {
+                        var str = `
+                        <tr>
+                        <td>${value.Title}</td>
+                        <td>${value.username}</td>
+                        <td>${value.auditContent}</td>
+                        <td>${value.audittime}</td>
+                        </tr>`;
+                        tbody.append(str);
+                    })
+                })
+
+
+            })
+
+            $('#auditRecordModalLabel').on('hidden.bs.modal', function (en) {
+
+                self.location = "admin.html";
+            })
+
+            //------------------------Initialize audit record end--------------------   ------------
+
+            //------------------------------Initialize edit page  atart----------------------------------
+
+            $('#editModal').on('shown.bs.modal', function (en) {
+
+                var dataid = $(en.relatedTarget).data('id');
+                $("input[type=hidden]").val(dataid);
+                var url = "experiment.php?do=getep";
+                var data = { "dataid": dataid };
+                $.getJSON(url, data, function (res) {
+                    $("#editModalTitle").val(res.Title);
+                    $("#editModalContent").val(res.content);
+                    $('#editModalA').attr('href', res.filePath);
+                    $("#editModalA").text(res.fileName);
+                    $('#editModalA').attr('download', res.fileName);
+                })
+
+            })
+            //------------------------------Initialize edit page  end----------------------------
+
+
+            // -------------------------Initialize approval page  start--------------------------
+
+
+            $('#auditModal').on('shown.bs.modal', function (en) {
+                var dataid = $(en.relatedTarget).data('id');
+                $("input[type=hidden]").val(dataid);
+                var url = "experiment.php?do=getep";
+                var data = { "dataid": dataid };
+                $.getJSON(url, data, function (res) {
+
+                    $("#auditModalTitle").val(res.Title);
+                    $("#auditModalContent").val(res.content);
+                    $('#auditModalA').attr('href', res.filePath);
+                    $("#auditModalA").text(res.fileName);
+                    $('#auditModalA').attr('download', res.fileName);
+                })
+            })
+
+            // -------------------------Initialize approval page  end--------------------------
+            // -------------------------disagreee  start--------------------------
+
+            $('#disagree').on('click', function () {
+
+                var url = "experiment.php?do=audit";
+                var auditContent = $('#auditContent').val();
+                var auditdateid = $("input:hidden[name='auditdateid']").val();
+
+                var data = { "auditdateid": auditdateid, "auditContent": auditContent, "isagree": "disagree" };
+                if (auditContent == "") {
+                    alert("Disagree, please fill in your opinion")
+                    return false;
+                }
+                $.get(url, data, function (res) {
+
+                    if (res == '1') {
+                        alert("Audit successful")
+                        self.location = "admin.html";
+                    }
+                    else {
+                        alert('Audit failed');
+                    }
+
+                })
+            })
+
+            // -------------------------disagreee  end--------------------------
+            // -------------------------agreee  start--------------------------
+
+
+            $('#Agree').on('click', function () {
+                var url = "experiment.php?do=audit";
+                var auditContent = $('#auditContent').val();
+                var auditdateid = $("input:hidden[name='auditdateid']").val();
+                var data = { "auditdateid": auditdateid, "auditContent": auditContent, "isagree": "agree" };
+                $.get(url, data, function (res) {
+                    if (res == '1') {
+                        alert("Audit successful")
+                        self.location = "admin.html";
+                    }
+                    else {
+                        alert('Audit failed');
+                    }
+
+                })
+            })
+
+            // -------------------------agreee  end--------------------------
+
+            // -------------------------Initialize allocation page  satart---------------
+
+
+            $('#assignModal').on('shown.bs.modal', function (en) {
+
+                var dataid = $(en.relatedTarget).data('id');
+
+                $("input[type=hidden]").val(dataid);
+
+                var url = "experiment.php?do=getAuditor";
+                var data = { "dataid": dataid };
+                var assignReviewer = $('#assignReviewer');
+
+                $.getJSON(url, data, function (res) {
+                    $.each(res, function (n, value) {
+                        var op = `<option value="${value.id}">${value.username}</option>`;
+                        assignReviewer.append(op);
+                    })
+                });
+
+                var url = "experiment.php?do=getep";
+                $.getJSON(url, data, function (res) {
+                    $("#assignModalTitle").val(res.Title);
+                    $("#assignModalcontent").val(res.content);
+                    $('#assignModalA').attr('href', res.filePath);
+                    $("#assignModalA").text(res.fileName);
+                    $('#assignModalA').attr('download', res.fileName);
+                })
+
+            })
+
+            // -------------------------Initialize allocation page  end---------------
+
+
+            // -------------------------Assign reviewers start---------------
+            $('#assignModalButton').on('click', function () {
+
+                var url = "experiment.php?do=assign";
+                // var assignReviewer = $('#assignReviewer option:selected').val();
+
+                var assignReviewer = "";
+
+
+                var options = $("#assignReviewer option:selected");
+                $("#assignReviewer option:selected").each(function () {
+                    assignReviewer += $(this).val();
+                    assignReviewer += ","
+                });
+
+                var assigndateid = $("input:hidden[name='assigndateid']").val();
+
+
+                if (typeof (assignReviewer) == "undefined") {
+                    alert("Please select the person to be assigned")
+                    return false;
+                }
+
+                var data = { "assigndateid": assigndateid, "assignReviewer": assignReviewer };
+
+                $.get(url, data, function (res) {
+                    if (res == '1') {
+                        alert('allocation successful')
+                        self.location = "admin.html";
+                    }
+                    else {
+                        alert('allocation failed');
+                    }
+
+                })
+            })
+
+            // -------------------------Assign reviewers end---------------
+
+            var logout = function () {
+                var url = "user.php?do=logout";
+                var data = {};
+                $.get(url, data, function (res) {
+
+                    if (res == '1') {
+                        alert("logout succeeded")
+                        self.location = "index.html";
+                    }
+                    else {
+                        alert('logout failed');
+                    }
+
+                })
+            }
+
+
+
+        </script>
+
+</body>
+
+</html>

@@ -1,0 +1,104 @@
+/*
+SQLyog Ultimate v10.00 Beta1
+MySQL - 5.5.15 : Database - rgu_ygm
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`rgu_ygm` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `rgu_ygm`;
+
+/*Table structure for table `appointment` */
+
+DROP TABLE IF EXISTS `appointment`;
+
+CREATE TABLE `appointment` (
+  `userId` char(10) NOT NULL,
+  `classid` char(50) NOT NULL,
+  `appTime` datetime DEFAULT NULL,
+  `score` decimal(8,0) DEFAULT NULL,
+  `special` char(100) DEFAULT NULL,
+  `appRamark` char(100) DEFAULT NULL,
+  PRIMARY KEY (`userId`,`classid`),
+  KEY `FK_appointment` (`classid`),
+  CONSTRAINT `FK_appointment2` FOREIGN KEY (`userId`) REFERENCES `gym_user` (`userId`),
+  CONSTRAINT `FK_appointment` FOREIGN KEY (`classid`) REFERENCES `gym_classe` (`classid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `appointment` */
+
+/*Table structure for table `coach` */
+
+DROP TABLE IF EXISTS `coach`;
+
+CREATE TABLE `coach` (
+  `coachId` char(50) NOT NULL,
+  `coachName` char(50) DEFAULT NULL,
+  `Expertise` char(100) DEFAULT NULL,
+  `coachRamark` char(100) DEFAULT NULL,
+  PRIMARY KEY (`coachId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `coach` */
+
+/*Table structure for table `gym_classe` */
+
+DROP TABLE IF EXISTS `gym_classe`;
+
+CREATE TABLE `gym_classe` (
+  `classid` char(50) NOT NULL,
+  `className` char(50) DEFAULT NULL,
+  `position` char(100) DEFAULT NULL,
+  `topic` char(100) DEFAULT NULL,
+  `startTime` datetime DEFAULT NULL,
+  `endTime` datetime DEFAULT NULL,
+  `classRamark` char(100) DEFAULT NULL,
+  PRIMARY KEY (`classid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `gym_classe` */
+
+/*Table structure for table `gym_user` */
+
+DROP TABLE IF EXISTS `gym_user`;
+
+CREATE TABLE `gym_user` (
+  `userId` char(10) NOT NULL,
+  `userName` char(50) DEFAULT NULL,
+  `userPw` char(100) DEFAULT NULL,
+  `contactNumber` char(50) DEFAULT NULL,
+  `userEmail` char(50) DEFAULT NULL,
+  `userType` int(11) DEFAULT NULL,
+  `userRamark` char(100) DEFAULT NULL,
+  PRIMARY KEY (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `gym_user` */
+
+/*Table structure for table `teach` */
+
+DROP TABLE IF EXISTS `teach`;
+
+CREATE TABLE `teach` (
+  `coachId` char(50) NOT NULL,
+  `classid` char(50) NOT NULL,
+  PRIMARY KEY (`coachId`,`classid`),
+  KEY `FK_teach2` (`classid`),
+  CONSTRAINT `FK_teach2` FOREIGN KEY (`classid`) REFERENCES `gym_classe` (`classid`),
+  CONSTRAINT `FK_teach` FOREIGN KEY (`coachId`) REFERENCES `coach` (`coachId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `teach` */
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

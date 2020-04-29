@@ -1,0 +1,94 @@
+/*==============================================================*/
+/* DBMS name:      MySQL 5.0                                    */
+/* Created on:     2020/3/14 19:09:15                           */
+/*==============================================================*/
+
+
+drop table if exists appointment;
+
+drop table if exists coach;
+
+drop table if exists gym_classe;
+
+drop table if exists gym_user;
+
+drop table if exists teach;
+
+/*==============================================================*/
+/* Table: appointment                                           */
+/*==============================================================*/
+create table appointment
+(
+   userId               char(10) not null,
+   classid              char(50) not null,
+   appTime              datetime,
+   score                numeric(8,0),
+   special              char(100),
+   appRamark            char(100),
+   primary key (userId, classid)
+);
+
+/*==============================================================*/
+/* Table: coach                                                 */
+/*==============================================================*/
+create table coach
+(
+   coachId              char(50) not null,
+   coachName            char(50),
+   Expertise            char(100),
+   coachRamark          char(100),
+   primary key (coachId)
+);
+
+/*==============================================================*/
+/* Table: gym_classe                                            */
+/*==============================================================*/
+create table gym_classe
+(
+   classid              char(50) not null,
+   className            char(50),
+   position             char(100),
+   topic                char(100),
+   startTime            datetime,
+   endTime              datetime,
+   classRamark          char(100),
+   primary key (classid)
+);
+
+/*==============================================================*/
+/* Table: gym_user                                              */
+/*==============================================================*/
+create table gym_user
+(
+   userId               char(10) not null,
+   userName             char(50),
+   userPw               char(100),
+   contactNumber        char(50),
+   userEmail            char(50),
+   userType             int,
+   userRamark           char(100),
+   primary key (userId)
+);
+
+/*==============================================================*/
+/* Table: teach                                                 */
+/*==============================================================*/
+create table teach
+(
+   coachId              char(50) not null,
+   classid              char(50) not null,
+   primary key (coachId, classid)
+);
+
+alter table appointment add constraint FK_appointment foreign key (classid)
+      references gym_classe (classid) on delete restrict on update restrict;
+
+alter table appointment add constraint FK_appointment2 foreign key (userId)
+      references gym_user (userId) on delete restrict on update restrict;
+
+alter table teach add constraint FK_teach foreign key (coachId)
+      references coach (coachId) on delete restrict on update restrict;
+
+alter table teach add constraint FK_teach2 foreign key (classid)
+      references gym_classe (classid) on delete restrict on update restrict;
+

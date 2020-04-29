@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>search</title>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!--Start of upper navigation bar-->
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="admin.html"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Admin</a>
+                    </li>
+                    <li><a href="admin.html"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;Experiment
+                            management</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#bbs"><span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;Logout</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+    <!--end of upper navigation bar-->
+
+    <div class="container">
+        <div class="row">
+            <!--  Left navigation bar start-->
+            <div class="col-md-2">
+                <div class="list-group">
+                    <a href="admin.html" class="list-group-item ">experimentList</a>
+                    <a href="search.html" class="list-group-item active ">experimentSearch</a>
+                    <a href="experimentadd.html" class="list-group-item">experimentAdd</a> </div>
+            </div>
+            <!--  Left navigation bar end-->
+            <!-- body start -->
+
+            <div class="col-md-10">
+                <!--  Body navigation start-->
+                <div class="page-header">
+                    <h1>experiment Management</h1>
+                </div>
+                <ul class="nav nav-tabs">
+                    <li>
+                        <a href="admin.html">experimentList</a>
+                    </li>
+                    <li class="active">
+                        <a href="search.html">experimentSearch</a>
+                    </li>
+                    <li>
+                        <a href="experimentadd.html">experimentAdd</a>
+                    </li>
+                </ul>
+                <!--  Body navigation end-->
+                <!--  form start-->
+                <form action="#" class="uesr_search">
+                    <div class="alert alert-info" role="alert">
+                        <strong>Tips：</strong>
+                        Support fuzzy search and match search.
+                    </div>
+                    <div class="form-group">
+                        <label for="Title">Title</label>
+                        <input type="texte" id="Title" class="form-control" placeholder="please enter title">
+                    </div>
+                    <div class="form-group">
+                        <label for="Experiment applicant">Experiment applicant</label>
+                        <input type="text" id="applicant" class="form-control"
+                            placeholder="please enter experiment applicant">
+                    </div>
+
+                    <button type="button" class="btn btn-default">search</button>
+                </form>
+                <!--  form end-->
+            </div>
+            <!-- body end -->
+        </div>
+    </div>
+    <!--footer start -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>
+                        Copyright© 2008-2020 xxxxx. All Rights Reserved. Magento Templates by xxxx.COM
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--footer end -->
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/myjs.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
